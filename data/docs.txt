@@ -1,0 +1,219 @@
+=== OOP ===
+
+A class is a blueprint of an object, and an object is an instance of a class.
+A class defines what an object should look like and the object is created based on that class.
+
+class MyClass:
+  x = 5
+p1 = MyClass()
+print(p1.x)
+
+class MyClass:
+  def __init__(self, x):
+    self.x = x
+p1 = MyClass(5)
+print(p1.x)
+
+class Person:
+  def __init__(self, name, age):
+    self.name = name
+    self.age = age
+
+  def __str__(self):
+    return f"{self.name}({self.age})"
+
+p1 = Person("John", 36)
+print(p1)
+
+class Person:
+  def __init__(self, name, age):
+    self.name = name
+    self.age = age
+
+  def myfunc(self):
+    print("Hello my name is " + self.name)
+
+p1 = Person("John", 36)
+p1.myfunc()
+
+del p1.age
+del p1
+
+=== INHERITANCE ===
+Inheritance allows us to define a class that inherits all the methods and properties from another class.
+Parent class is the class being inherited from, also called base class.
+Child class is the class that inherits from another class, also called derived class.
+
+class Student(Person):
+  pass	
+
+=== POLYMORPHISM ===
+The word "polymorphism" means "many forms", and in programming it refers to methods with the same name that can be executed on many objects or classes.
+Method overriding and method overloading. (explain with vehicle code and default function variable code)
+
+class Vehicle:
+  def __init__(self, brand, model):
+    self.brand = brand
+    self.model = model
+
+  def move(self):
+    print("Move!")
+
+class Car(Vehicle):
+  pass
+
+class Boat(Vehicle):
+  def move(self):
+    print("Sail!")
+
+class Plane(Vehicle):
+  def move(self):
+    print("Fly!")
+
+car1 = Car("Ford", "Mustang")       #Create a Car object
+boat1 = Boat("Ibiza", "Touring 20") #Create a Boat object
+plane1 = Plane("Boeing", "747")     #Create a Plane object
+
+for x in (car1, boat1, plane1):
+  print(x.brand)
+  print(x.model)
+  x.move()
+
+class Calculator:
+  def __init__(self, a, b, c = 0):
+    self.a = a
+    self.b = b
+    self.c = c
+  def __str__(self):
+    return f"The sum is {self.a + self.b + self.c}"
+c1 = Calculator(1, 2)
+c2 = Calculator(1, 2, 3)
+print(c1)
+print(c2)
+
+=== ENCAPSULATION ===
+Encapsulation involves bundling data (attributes) and the methods (functions) that operate on that data into a single unit, which is typically a class. It restricts direct access to an object's internal state and promotes data hiding, ensuring data integrity. (explain with bank code)
+
+class Bank:
+  def __init__(self, name, balance):
+    self.name = name
+    self.__balance = balance
+  def deposit(self, amount):
+    if amount > 0:
+      self.__balance += amount
+    else:
+      print("Enter a valid amount")
+  def withdraw(self, amount):
+    if 0 < amount < self.__balance:
+      self.__balance -= amount
+    else:
+      print("Insufficient balance")
+  def get_balance(self):
+    return self.__balance
+b1 = Bank("Anirudh", 1000)
+b1.deposit(1000)
+b1.withdraw(500)
+print(b1.get_balance())
+
+=== ABSTRACTION ===
+Abstraction involves hiding unnecessary implementation details and exposing only essential features. It simplifies complex systems, allowing focus on what an object does rather than how. (explain with shape code)
+
+from abc import ABC, abstractmethod
+import math
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self):
+        pass
+
+    @abstractmethod
+    def perimeter(self):
+        pass
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return math.pi * self.radius ** 2
+
+    def perimeter(self):
+        return 2 * math.pi * self.radius
+
+class Rectangle(Shape):
+    def __init__(self, length, breadth):
+        self.length = length
+        self.breadth = breadth
+
+    def area(self):
+        return self.length * self.breadth
+
+    def perimeter(self):
+        return 2 * (self.length + self.breadth)
+
+c = Circle(5)
+r = Rectangle(4, 6)6
+print("Circle area:", c.area())
+print("Rectangle perimeter:", r.perimeter())
+
+=== DBMS ===
+
+Feature	             SQL (like MySQL)	                                                                NoSQL (like MongoDB)
+Structure	     Relational (data in tables with rows and columns)	                                Non-relational (data in documents, key-value pairs, etc.)
+Schema	             Strict Schema: The table structure is fixed.	                                Dynamic Schema: Documents can have different structures.
+Relationships	     Uses JOINs to link data across different tables.	                                Data is often nested or embedded in a single document.
+Best For	     Applications needing high consistency and complex queries (e.g., banking systems).	Applications needing high flexibility and scalability (e.g., social media feeds, content management).
+ 
+
+Normalization is the process of organizing tables in a relational database to minimize data redundancy (repetition) and improve data integrity (accuracy and consistency). In simple terms, you do it to avoid problems when you add, update, or delete data.
+
+First Normal Form (1NF):
+Rule: Each cell in a table must hold a single, atomic value, and each record must be unique.
+
+Second Normal Form (2NF):
+Rule: The table must be in 1NF, and every non-key attribute must be fully dependent on the entire primary key. (This applies when you have a composite primary key).
+
+Third Normal Form (3NF):
+Rule: The table must be in 2NF, and there should be no transitive dependencies (where a non-key attribute depends on another non-key attribute).
+Simple Explanation: A column's value should not be determined by any other non-key column. For example, if you have a ProfessorName column in a StudentCourses table, and that professor's name is determined by the CourseID, the professor's name is transitively dependent. You should move ProfessorName to a Courses table.
+
+Types of SQL commands:
+DDL (Data Definition Language) - CREATE, ALTER, DROP, TRUNCATE
+DML (Data Manipulation Language) - INSERT, DELETE, UPDATE
+DQL (Data Query Language) - SELECT
+DCL (Data Control Language) - GRANT, REVOKE/
+TCL (Transaction Control Language) - COMMIT, ROLLBACK, SAVEPOINT
+
+ACID properties:
+Atomicity - Full or nothin'
+Consistency - Valid state before and after transaction
+Isolation - Transactions don't interfere
+Durability - Changes persist even after a crash
+
+=== SEPM ===
+Waterfall Model - Requirement Analysis -> Design -> Coding -> Testing -> Deploying -> Maintain (Heavy Documentation)
+Agile - Iterative and incremental development, flexible enough to adapt to changes. Has a framework called scrum that divides work in three roles which are Product owner, Scrum Master, Development Team.
+Product Owner - Customer
+Scrum Master - Fascilitator, ensures agile principles and removes obstacles
+Development Team- Cross functional team 
+It uses sprint which is a short amount of time given to the team to work on a set of tasks from the product backlog
+sprint backlog is a subset of product backlog
+Sprint planning
+Daily stand up meetings that last for 15 minutes
+Sprint review
+Sprint retrospective
+Types of testing - Unit Testing, Integrated Testing, System testing, acceptance testing(if it is meeting the requirements and checked by client)
+
+=== RAG ===
+RAG stands for Retrieval Augmented Generation which is the process of optimizing the output of a Large Language Model(LLM). Basically, it references to the knowledge base which is outside the training data source before generating a response.
+Data -> Parsing -> Chunking -> Embedding -> Vector DB
+
+Agentic RAG is a framework to enhance traditional RAG systems by incorporating intelligent agents to handle complex tasks and make decisions dynamically.
+
+LangChain: Used to create an LLM powered application. The three steps are Retrieve, Summarize and Output. Retrieve involves Data Ingestion, Parsing and Embedding in Vector Database. 
+The Summarize steps follow a sequence where you can't go back to a previous step. 
+
+LangGraph: Used to create Stateful Multi AI Agentic Applications where the AI agents communicate with each other to solve a complex task.
+It involves tasks, nodes, edges(flow of info) and graph.
+
+
